@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />  
+    <link rel="icon" href="%PUBLIC_URL%/logoo.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="application-name" content="React Reduction" />
+    <meta
+      name="description"
+      content="React version of Reduction Admin Template" />
+    <meta property="og:title" content="React Reduction" />
+    <meta
+      property="og:description"
+      content="React version of Reduction Admin Template" />
+    <meta property="og:site_name" content="React Reduction" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="React Reduction" />
+    <meta
+      name="twitter:description"
+      content="React version of Reduction Admin Template" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link
+      rel="manifest"
+      href="https://reduction-admin.github.io/react-reduction/manifest.json" />
+    <link
+      rel="shortcut icon"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="%PUBLIC_URL%/logoo.ico" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <link
+    href="https://reduction-admin.github.io/react-reduction/static/css/main.6b6d1b0a.chunk.css"
+    rel="stylesheet" />
+  <script ecommerce-type="extend-native-history-api">
+    (() => {
+      const nativePushState = history.pushState;
+      const nativeReplaceState = history.replaceState;
+      const nativeBack = history.back;
+      const nativeForward = history.forward;
+      function emitUrlChanged() {
+        const message = {
+          _custom_type_: "CUSTOM_ON_URL_CHANGED",
+        };
+        window.postMessage(message);
+      }
+      history.pushState = function () {
+        nativePushState.apply(history, arguments);
+        emitUrlChanged();
+      };
+      history.replaceState = function () {
+        nativeReplaceState.apply(history, arguments);
+        emitUrlChanged();
+      };
+      history.back = function () {
+        nativeBack.apply(history, arguments);
+        emitUrlChanged();
+      };
+      history.forward = function () {
+        nativeForward.apply(history, arguments);
+        emitUrlChanged();
+      };
+    })();
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2FZ1WECZ2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-W2FZ1WECZ2');
+  </script>
+  <style id="erd_scroll_detection_scrollbar_style">
+    /* Created by the element-resize-detector library. */
+    .erd_scroll_detection_container > div::-webkit-scrollbar {
+      display: none;
+    }
+
+    .erd_scroll_detection_container_animation_active {
+      -webkit-animation-duration: 0.1s;
+      animation-duration: 0.1s;
+      -webkit-animation-name: erd_scroll_detection_container_animation;
+      animation-name: erd_scroll_detection_container_animation;
+    }
+
+    @-webkit-keyframes erd_scroll_detection_container_animation {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes erd_scroll_detection_container_animation {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+    <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/0.f9a7e6bb.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/4.1c5ebd1b.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/5.3445d085.chunk.js"></script>
+  <style type="text/css">
+    /* Chart.js */
+    @-webkit-keyframes chartjs-render-animation {
+      from {
+        opacity: 0.99;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes chartjs-render-animation {
+      from {
+        opacity: 0.99;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .chartjs-render-monitor {
+      -webkit-animation: chartjs-render-animation 0.001s;
+      animation: chartjs-render-animation 0.001s;
+    }
+  </style>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/10.ce0effb8.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/13.a5ad46e5.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/8.1092283a.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/15.6994ebc9.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/7.116e0c99.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/20.58e45c52.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/17.e65df14e.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/6.9f5d4b42.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/11.28476e38.chunk.js"></script>
+  <script
+    charset="utf-8"
+    src="https://reduction-admin.github.io/react-reduction/static/js/16.6b21ce42.chunk.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Ramsons Stainless</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
