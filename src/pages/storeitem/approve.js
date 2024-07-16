@@ -83,6 +83,7 @@ const EAPURlist = () => {
       title: "PO No.",
       dataIndex: "code",
       align: "center",
+      width: "100px",
       sorter: true,
       onHeaderCell: () => ({
         onClick: () => handleSort("code"),
@@ -94,7 +95,7 @@ const EAPURlist = () => {
       width: 150,
       sorter: true,
       onHeaderCell: () => ({
-        onClick: () => handleSort("commpany_id__company_name"),
+        onClick: () => handleSort("company_id__company_name"),
       }),
     },
     {
@@ -665,6 +666,11 @@ const EAPURlist = () => {
         ...getColumnSearchProps(column.dataIndex),
       };
     } else if (column.dataIndex === "budget") {
+      return {
+        ...column,
+        ...getColumnSearchProps(column.dataIndex),
+      };
+    } else if (column.dataIndex === "code") {
       return {
         ...column,
         ...getColumnSearchProps(column.dataIndex),

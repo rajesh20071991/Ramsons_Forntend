@@ -11,6 +11,7 @@ export const Accessories_form = () => {
     { value: "Operator", label: "Operator" },
     { value: "Helper", label: "Helper" },
     { value: "Remarks", label: "Remarks" },
+    { value: "Rack", label: "Rack" },
   ];
 
   function Senddata(e) {

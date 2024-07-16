@@ -6,6 +6,7 @@ export const Vh_form = () => {
   function Senddata(e) {
     e.preventDefault();
     var Body = {
+      date: e.target.date.value,
       serial_no: e.target.serial_no.value,
       vehicle_number: e.target.vehicle_number.value,
       party_name: e.target.party_name.value,
@@ -28,9 +29,8 @@ export const Vh_form = () => {
         id="exampleModalToggle"
         aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel"
-        tabIndex="-1"
-      >
-        <div className="modal-dialog modal-dialog-centered ">
+        tabIndex="-1">
+        <div className="modal-dialog modal-dialog-centered modal-dialog modal-xl">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalToggleLabel">
@@ -40,15 +40,23 @@ export const Vh_form = () => {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+                aria-label="Close"></button>
             </div>
 
             <div className="modal-body">
               <form onSubmit={Senddata}>
                 <div className="row">
-                  <div className="col-md-4">
-                    <label className="control-label">Serial Number</label>
+                  <div className="col-md-2">
+                    <label className="control-label">Date</label>
+                    <input
+                      type="date"
+                      id="date"
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-1">
+                    <label className="control-label">Serial No.</label>
                     <input
                       rows="5"
                       id="serial_no"
@@ -57,7 +65,7 @@ export const Vh_form = () => {
                       required
                     />
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-2">
                     <label className="control-label">Vehicle No.</label>
                     <input
                       rows="5"
@@ -67,19 +75,17 @@ export const Vh_form = () => {
                       required
                     />
                   </div>
-                </div>
-                <div className="col-md-6">
-                  <label className="control-label">Party Name</label>
-                  <input
-                    rows="5"
-                    id="party_name"
-                    placeholder="Party Name"
-                    className="form-control"
-                    required
-                  />
-                </div>
-                <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-3">
+                    <label className="control-label">Party Name</label>
+                    <input
+                      rows="5"
+                      id="party_name"
+                      placeholder="Party Name"
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-2">
                     <label className="control-label">Quantity</label>
                     <input
                       type="number"
@@ -90,7 +96,7 @@ export const Vh_form = () => {
                       required
                     />
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-2">
                     <label className="control-label">No. of Coils</label>
                     <input
                       type="number"
@@ -101,7 +107,6 @@ export const Vh_form = () => {
                     />
                   </div>
                 </div>
-                <div></div>
                 <br />
                 <center>
                   <input

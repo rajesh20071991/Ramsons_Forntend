@@ -221,6 +221,30 @@ const Storelist = () => {
       ellipsis: true,
     },
     {
+      title: "Rack",
+      dataIndex: "rack",
+      key: "rack",
+      ellipsis: true,
+      editable: true,
+      render: (text, record, index) => {
+        const isEditing = isEditings(record); // Check if the current row is in edit mode
+        return isEditing ? (
+          <EditableCell
+            editing={isEditing}
+            dataIndex="rack"
+            title="Rack"
+            inputType="select"
+            record={record}
+            index={index}
+            selectOptions={racklist}>
+            {text}
+          </EditableCell>
+        ) : (
+          <span>{text}</span>
+        );
+      },
+    },
+    {
       title: "Rate",
       dataIndex: "rate",
       key: "rate",
@@ -460,6 +484,7 @@ const Storelist = () => {
   var [itemCode, setSkCode] = useState([]);
   var [item_names, setitemNames] = useState([]);
   var [descriptions, setDesc] = useState([]);
+  var [racklist, setracklist] = useState([]);
   const [companyNames, setCompanyNames] = useState([]);
   useEffect(() => {
     api({ api: "/storeitem/itemlist/" }).then((data) => {
@@ -485,6 +510,9 @@ const Storelist = () => {
     });
     api({ api: "/storeitem/companydatalist/" }).then((data) => {
       setCompanyNames(data);
+    });
+    api({ api: "/storeitem/racklisted/" }).then((data) => {
+      setracklist(data);
     });
   }, []);
 
@@ -899,6 +927,7 @@ const Storelist = () => {
                 gst: enty.gst,
                 quantity: enty.quantity,
                 hsnCode: enty.hsnCode,
+                rack: enty.rack,
                 rate: enty.rate,
                 status: enty.status,
                 id: enty.id,

@@ -71,7 +71,7 @@ export const Booking_Form = () => {
 
   const [gradepipe, setgradepipe] = useState("");
   useEffect(() => {
-    api({ api: "/storeitem/companyfilter/" }).then((data) => {
+    api({ api: "/storeitem/companyfilters/" }).then((data) => {
       setVendorlist(data);
     });
     api({ api: "/storeitem/pipegradelist/" }).then((data) => {

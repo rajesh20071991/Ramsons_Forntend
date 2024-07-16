@@ -4,7 +4,7 @@ import Select from "react-select";
 import { api } from "../../../services/api";
 
 export const SalesTeam_form = () => {
-  var [form_data, setforms] = useState([
+  const [form_data, setforms] = useState([
     {
       key: 0,
       company: "",
@@ -16,7 +16,8 @@ export const SalesTeam_form = () => {
     },
   ]);
 
-  const [company, setCompany] = React.useState([]);
+  const [company, setCompany] = useState([]);
+
   useEffect(() => {
     api({ api: "/storeitem/companysales/" })
       .then((data) => {
@@ -26,6 +27,7 @@ export const SalesTeam_form = () => {
         console.error("Error fetching vendor names:", error);
       });
   }, []);
+
   function Senddata(event) {
     event.preventDefault();
     api({
@@ -42,26 +44,43 @@ export const SalesTeam_form = () => {
       });
   }
 
-  console.log(form_data);
   function handleAddForm(key) {
-    if (form_data[key].unit === "") {
-    } else {
-      var form_body = {
-        key: form_data[form_data.length - 1].key + 1,
-        company: "",
-        executive: "",
-        manager: "",
-        counter: "",
-        plan: "",
-        reorder: "",
-      };
-      setforms([...form_data, form_body]);
+    if (form_data[key].company === "") {
+      return;
     }
+    const newKey = form_data[form_data.length - 1].key + 1;
+    const newForm = {
+      key: newKey,
+      company: "",
+      executive: "",
+      manager: "",
+      counter: "",
+      plan: "",
+      reorder: "",
+    };
+    setforms([...form_data, newForm]);
   }
 
-  // remove
   function handleRemoveForm(index) {
     setforms(form_data.filter((item) => item.key !== index));
+  }
+
+  function handleCompanyChange(selectedOption, key) {
+    const selectedCompany = company.find(
+      (c) => c.value === selectedOption.value
+    );
+    const updatedForm = form_data.map((form) => {
+      if (form.key === key) {
+        return {
+          ...form,
+          company: selectedOption.value,
+          executive: selectedCompany.executive,
+          manager: selectedCompany.manager,
+        };
+      }
+      return form;
+    });
+    setforms(updatedForm);
   }
 
   return (
@@ -84,7 +103,6 @@ export const SalesTeam_form = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"></button>
             </div>
-
             <div
               className="modal-body"
               style={{
@@ -104,7 +122,7 @@ export const SalesTeam_form = () => {
                           }}>
                           <div
                             className="row"
-                            style={{ "--bs-gutter-x": " 0rem" }}>
+                            style={{ "--bs-gutter-x": "0rem" }}>
                             <div className="col-md-11">
                               <div className="row">
                                 <div className="col-md-12 row">
@@ -113,9 +131,9 @@ export const SalesTeam_form = () => {
                                       Company Name
                                     </label>
                                     <Select
-                                      onChange={(e) => {
-                                        form_data[data.key].company = e.value;
-                                      }}
+                                      onChange={(e) =>
+                                        handleCompanyChange(e, data.key)
+                                      }
                                       options={company}
                                     />
                                   </div>
@@ -125,9 +143,18 @@ export const SalesTeam_form = () => {
                                     </label>
                                     <input
                                       type="text"
+                                      value={data.executive}
                                       onChange={(e) => {
-                                        form_data[data.key].executive =
-                                          e.target.value;
+                                        const updatedForm = form_data.map(
+                                          (form) =>
+                                            form.key === data.key
+                                              ? {
+                                                  ...form,
+                                                  executive: e.target.value,
+                                                }
+                                              : form
+                                        );
+                                        setforms(updatedForm);
                                       }}
                                       placeholder="Executive Name"
                                       className="form-control"
@@ -140,10 +167,19 @@ export const SalesTeam_form = () => {
                                     </label>
                                     <input
                                       type="text"
+                                      value={data.manager}
                                       placeholder="Manager Name"
                                       onChange={(e) => {
-                                        form_data[data.key].manager =
-                                          e.target.value;
+                                        const updatedForm = form_data.map(
+                                          (form) =>
+                                            form.key === data.key
+                                              ? {
+                                                  ...form,
+                                                  manager: e.target.value,
+                                                }
+                                              : form
+                                        );
+                                        setforms(updatedForm);
                                       }}
                                       className="form-control"
                                       required
@@ -155,9 +191,18 @@ export const SalesTeam_form = () => {
                                     </label>
                                     <input
                                       type="number"
+                                      value={data.counter}
                                       onChange={(e) => {
-                                        form_data[data.key].counter =
-                                          e.target.value;
+                                        const updatedForm = form_data.map(
+                                          (form) =>
+                                            form.key === data.key
+                                              ? {
+                                                  ...form,
+                                                  counter: e.target.value,
+                                                }
+                                              : form
+                                        );
+                                        setforms(updatedForm);
                                       }}
                                       placeholder="Counter"
                                       className="form-control"
@@ -170,9 +215,18 @@ export const SalesTeam_form = () => {
                                     </label>
                                     <input
                                       type="number"
+                                      value={data.plan}
                                       onChange={(e) => {
-                                        form_data[data.key].plan =
-                                          e.target.value;
+                                        const updatedForm = form_data.map(
+                                          (form) =>
+                                            form.key === data.key
+                                              ? {
+                                                  ...form,
+                                                  plan: e.target.value,
+                                                }
+                                              : form
+                                        );
+                                        setforms(updatedForm);
                                       }}
                                       placeholder="NBD Plan(MT)"
                                       className="form-control"
@@ -185,9 +239,18 @@ export const SalesTeam_form = () => {
                                     </label>
                                     <input
                                       type="number"
+                                      value={data.reorder}
                                       onChange={(e) => {
-                                        form_data[data.key].reorder =
-                                          e.target.value;
+                                        const updatedForm = form_data.map(
+                                          (form) =>
+                                            form.key === data.key
+                                              ? {
+                                                  ...form,
+                                                  reorder: e.target.value,
+                                                }
+                                              : form
+                                        );
+                                        setforms(updatedForm);
                                       }}
                                       placeholder="RE ORDER"
                                       className="form-control"

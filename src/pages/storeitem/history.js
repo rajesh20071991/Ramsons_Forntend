@@ -84,6 +84,7 @@ const History_ListPO = () => {
       dataIndex: "code",
       align: "center",
       sorter: true,
+      width: "100px",
       // Pass the handleSort function as the onHeaderCell property
       onHeaderCell: () => ({
         onClick: () => handleSort("code"),
@@ -669,6 +670,11 @@ const History_ListPO = () => {
         ...getColumnSearchProps(column.dataIndex),
       };
     } else if (column.dataIndex === "budget") {
+      return {
+        ...column,
+        ...getColumnSearchProps(column.dataIndex),
+      };
+    } else if (column.dataIndex === "code") {
       return {
         ...column,
         ...getColumnSearchProps(column.dataIndex),

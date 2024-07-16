@@ -71,18 +71,10 @@ const VehicleEntry = () => {
     },
     {
       title: "Date",
-      dataIndex: "created_on",
-      key: "created_on",
-      render: (created_on) => {
-        const date = new Date(created_on);
-        const dd = String(date.getDate()).padStart(2, "0");
-        const mm = String(date.getMonth() + 1).padStart(2, "0"); // January is 0!
-        const yyyy = date.getFullYear();
-        return `${dd}/${mm}/${yyyy}`;
-      },
-      sorter: (a, b) => new Date(a.created_on) - new Date(b.created_on),
-      sortDirections: ["ascend", "descend"],
+      dataIndex: "date",
+      key: "date",
       ellipsis: true,
+      editable: true,
     },
     {
       title: "Serial Number",

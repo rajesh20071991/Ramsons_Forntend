@@ -90,6 +90,7 @@ const Challanlist = () => {
       title: "Challan No.",
       dataIndex: "challan_no",
       key: "challanNo",
+      width: "100px",
       editable: true,
       render: (challan_no, row) => (
         <Link to={`/Challan/chalanview/${row.id}/`}>{challan_no}</Link>

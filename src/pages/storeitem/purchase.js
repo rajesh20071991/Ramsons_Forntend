@@ -52,8 +52,12 @@ const Purchaselist = () => {
       dataIndex: "edit",
       render: (_, record) => {
         const editable = isEditing(record);
-
-        if (record.final === "Pending") {
+        const user = localStorage.getItem("username");
+        if (
+          record.final === "Pending" ||
+          user === "admin" ||
+          user === "EMP3001"
+        ) {
           // If status is 'Pending' and current date is greater than 3 days from the record date, show the edit button
           return editable ? (
             <span>

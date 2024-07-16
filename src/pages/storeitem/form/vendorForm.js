@@ -3,6 +3,7 @@ import { api } from "../../../services/api";
 import { toast } from "react-toastify";
 import Select from "react-select";
 import { statelist } from "../../../services/constant";
+import axios from "axios";
 
 export const Vendor_forms = () => {
   var [form_data, setforms] = useState([
@@ -55,6 +56,48 @@ export const Vendor_forms = () => {
         toast("failed", { autoClose: 2000 });
       });
   }
+
+  const fetchCompanyDetails = async (gstNo, key) => {
+    try {
+      const response = await axios.get(`/api/gstdetails/${gstNo}`);
+
+      if (response.data.success && response.data.data.length > 0) {
+        const companyDetails = response.data.data[0];
+        const address = [
+          companyDetails.pradr.addr.bno,
+          companyDetails.pradr.addr.st,
+          companyDetails.pradr.addr.bnm,
+          companyDetails.pradr.addr.loc,
+          companyDetails.pradr.addr.dst,
+          companyDetails.pradr.addr.stcd,
+          companyDetails.pradr.addr.pncd,
+        ]
+          .filter(Boolean)
+          .join(", ");
+
+        // Example of how to update state in React
+        setforms((prevState) => {
+          const updatedForm = [...prevState];
+          updatedForm[key] = {
+            ...updatedForm[key],
+            contact_name: companyDetails.lgnm,
+            company_name: companyDetails.tradeNam,
+            shipping_add: address,
+            shipping_state: companyDetails.pradr.addr.stcd,
+            shipping_city: companyDetails.pradr.addr.loc,
+            pin_code: companyDetails.pradr.addr.pncd,
+            country: "India",
+          };
+          return updatedForm;
+        });
+      } else {
+        toast("GST Number not found", { autoClose: 2000 });
+      }
+    } catch (error) {
+      console.error("Failed to fetch company details:", error);
+      toast("Failed to fetch company details", { autoClose: 2000 });
+    }
+  };
 
   function handleAddForm(key) {
     if (form_data[key].unit === "") {
@@ -124,11 +167,32 @@ export const Vendor_forms = () => {
                               <div className="row">
                                 <div className="col-md-2">
                                   <label className="control-label">
+                                    GST No.
+                                  </label>
+                                  <input
+                                    rows="5"
+                                    placeholder="GST No."
+                                    value={data.gst_no}
+                                    onChange={(e) => {
+                                      const gstNo = e.target.value;
+                                      form_data[data.key].gst_no = gstNo;
+                                      setforms([...form_data]);
+                                      if (gstNo.length === 15) {
+                                        fetchCompanyDetails(gstNo, data.key);
+                                      }
+                                    }}
+                                    className="form-control"
+                                    required
+                                  />
+                                </div>
+                                <div className="col-md-2">
+                                  <label className="control-label">
                                     Person Name
                                   </label>
                                   <input
                                     rows="5"
                                     placeholder="Person Name"
+                                    value={data.contact_name}
                                     onChange={(e) => {
                                       form_data[data.key].contact_name =
                                         e.target.value;
@@ -144,6 +208,7 @@ export const Vendor_forms = () => {
                                   <input
                                     rows="5"
                                     placeholder="Company Name"
+                                    value={data.company_name}
                                     onChange={(e) => {
                                       form_data[data.key].company_name =
                                         e.target.value;
@@ -191,6 +256,7 @@ export const Vendor_forms = () => {
                                   <input
                                     rows="5"
                                     placeholder="Address"
+                                    value={data.shipping_add}
                                     onChange={(e) => {
                                       form_data[data.key].shipping_add =
                                         e.target.value;
@@ -199,25 +265,12 @@ export const Vendor_forms = () => {
                                     required
                                   />
                                 </div>
-                                <div className="col-md-2">
-                                  <label className="control-label">
-                                    GST No.
-                                  </label>
-                                  <input
-                                    rows="5"
-                                    placeholder="GST No."
-                                    onChange={(e) => {
-                                      form_data[data.key].gst_no =
-                                        e.target.value;
-                                    }}
-                                    className="form-control"
-                                    required
-                                  />
-                                </div>
+
                                 <div className="col-md-2">
                                   <label className="control-label">City</label>
                                   <input
                                     rows="5"
+                                    value={data.shipping_city}
                                     onChange={(e) => {
                                       form_data[data.key].shipping_city =
                                         e.target.value;
@@ -230,6 +283,11 @@ export const Vendor_forms = () => {
                                 <div className="col-md-4">
                                   <label className="control-label">State</label>
                                   <Select
+                                    value={statelist.find(
+                                      (option) =>
+                                        option.value ===
+                                        form_data[data.key].shipping_state
+                                    )}
                                     onChange={(e) => {
                                       form_data[data.key].shipping_state =
                                         e.value;
@@ -244,6 +302,7 @@ export const Vendor_forms = () => {
                                   <input
                                     type="number"
                                     placeholder="Pin Code"
+                                    value={data.pin_code}
                                     onChange={(e) => {
                                       form_data[data.key].pin_code =
                                         e.target.value;
@@ -259,6 +318,7 @@ export const Vendor_forms = () => {
                                   <input
                                     type="text"
                                     placeholder="County"
+                                    value={data.country}
                                     onChange={(e) => {
                                       form_data[data.key].country =
                                         e.target.value;

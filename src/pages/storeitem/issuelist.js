@@ -80,8 +80,9 @@ const Issuelist = () => {
     },
     {
       title: "Date",
-      dataIndex: "created_on",
+      dataIndex: "date",
       key: "date",
+      editable: true,
       render: (created_on) => {
         const date = new Date(created_on);
         const formattedDate = `${date.getDate()}/${

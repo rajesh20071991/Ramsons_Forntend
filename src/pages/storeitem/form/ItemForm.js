@@ -252,25 +252,55 @@ export const Item_form = () => {
 };
 
 export const Unit_form = () => {
-  const [diable, setdisable] = useState(false);
+  const [disable, setDisable] = useState(false);
+  const [status, setStatus] = useState(null);
+
+  const statusOptions = [
+    { value: "rack", label: "Rack" },
+    { value: "unit", label: "Unit" },
+  ];
 
   function Senddata(e) {
     e.preventDefault();
-    setdisable(true);
+    setDisable(true);
     var Body = {
       unit: e.target.unit.value,
+      status: status ? status.value : null,
     };
-    api({ api: "/api/budget/", method: "post", body: { form: Body, post: 3 } })
-      .then(() => {
-        toast("Success", { autoClose: 2000 });
-        setdisable(false);
-        window.location.reload();
+
+    if (status && status.value === "unit") {
+      api({
+        api: "/api/budget/",
+        method: "post",
+        body: { form: Body, post: 3 },
       })
-      .catch(() => {
-        toast("failed", { autoClose: 2000 });
-        setdisable(false);
-      });
+        .then(() => {
+          toast("Success", { autoClose: 2000 });
+          setDisable(false);
+          window.location.reload();
+        })
+        .catch(() => {
+          toast("failed", { autoClose: 2000 });
+          setDisable(false);
+        });
+    } else {
+      api({
+        api: "/api/account/",
+        method: "post",
+        body: { form: Body, post: 1 }, // Use form: Body if it needs to include the same structure
+      })
+        .then(() => {
+          toast("Success", { autoClose: 2000 });
+          setDisable(false);
+          window.location.reload();
+        })
+        .catch(() => {
+          toast("failed", { autoClose: 2000 });
+          setDisable(false);
+        });
+    }
   }
+
   return (
     <div className="Item-form">
       <div
@@ -279,11 +309,11 @@ export const Unit_form = () => {
         aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel"
         tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered ">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalToggleLabel">
-                Unit Add
+                Item Add
               </h5>
               <button
                 type="button"
@@ -295,22 +325,33 @@ export const Unit_form = () => {
             <div className="modal-body">
               <form className="row g-3" name="unitform" onSubmit={Senddata}>
                 <div className="col-md-4">
-                  <label className="control-label">Unit Name</label>
+                  <label className="control-label">Name</label>
                   <input
                     rows="5"
                     id="unit"
-                    placeholder="Unit Name"
+                    placeholder="Name"
                     className="form-control"
                     required
                   />
                 </div>
-                <input
-                  id="submit"
-                  disabled={diable}
-                  type="submit"
-                  className="btn btn-success"
-                  value="Submit"
-                />
+                <div className="col-md-4">
+                  <label className="control-label">Status</label>
+                  <Select
+                    options={statusOptions}
+                    onChange={setStatus}
+                    placeholder="Status"
+                    required
+                  />
+                </div>
+                <center>
+                  <input
+                    id="submit"
+                    disabled={disable}
+                    type="submit"
+                    className="btn btn-success"
+                    value="Submit"
+                  />
+                </center>
               </form>
             </div>
           </div>

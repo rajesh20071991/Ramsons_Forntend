@@ -84,6 +84,7 @@ const Final_Approve = () => {
       dataIndex: "code",
       align: "center",
       sorter: true,
+      width: "100px",
       // Pass the handleSort function as the onHeaderCell property
       onHeaderCell: () => ({
         onClick: () => handleSort("code"),
@@ -666,6 +667,11 @@ const Final_Approve = () => {
         ...getColumnSearchProps(column.dataIndex),
       };
     } else if (column.dataIndex === "budget") {
+      return {
+        ...column,
+        ...getColumnSearchProps(column.dataIndex),
+      };
+    } else if (column.dataIndex === "code") {
       return {
         ...column,
         ...getColumnSearchProps(column.dataIndex),

@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import logoo from "../Assets/logoo.png";
 import { useSelector } from "react-redux";
 import config from "../../config";
-import { IoMdNotifications } from "react-icons/io";
+import { Alert } from "react-bootstrap";
 import NavItems from "./navItems";
 import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";
 import { useNavigate } from "react-router-dom";
+
 const Nav = () => {
   const state = useSelector((state) => state.authData);
   const [currentTime, setCurrentTime] = useState(
@@ -29,7 +30,9 @@ const Nav = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [showNav, setShowNav] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showTitlebar, setShowTitlebar] = useState(false); // Ad
+  const [showTitlebar, setShowTitlebar] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -45,8 +48,16 @@ const Nav = () => {
     const user = localStorage.getItem("username");
     if (user) {
       setLoggedInUser(user);
-      setLoading(false); // Set loading to false when data is fetched
-      setShowTitlebar(true); // Show the titlebar after successful login
+      setLoading(false);
+      setShowTitlebar(true);
+      setShowAlert(true);
+      setAlertMessage(
+        "Hello Developer, kindly do software testing pending within 1 day, otherwise, it may crash."
+      );
+
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 5000);
     }
   }, []);
 
@@ -68,13 +79,8 @@ const Nav = () => {
   };
 
   const goToUser = () => {
-    navigate("/user_mamagement");
+    navigate("/user_management");
   };
-
-  // useEffect(() => {
-  //   const audio = new Audio("./sounds/welcome_sound.mp3");
-  //   audio.play();
-  // }, []);
 
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
@@ -106,9 +112,14 @@ const Nav = () => {
               </div>
             )}
             <div className="time">{currentTime}</div>
-            {/* <div className="notification-icon">
-              <IoMdNotifications size={"30px"} />
-            </div> */}
+            {showAlert && (
+              <Alert
+                variant="warning"
+                onClose={() => setShowAlert(false)}
+                dismissible>
+                {alertMessage}
+              </Alert>
+            )}
             <div className="logout-icon">
               <div ref={ref}>
                 {state.user && state.user.image && (
@@ -133,101 +144,57 @@ const Nav = () => {
                       style={{ textAlign: "center", color: "black" }}>
                       Profile
                     </Popover.Header>
-                    <Popover.Body>
-                      <div className="popcard">
-                        {state.user && state.user.image && (
-                          <img
-                            height="100px"
-                            width="100px"
-                            className="rounded-circle"
-                            src={config.apiEndpoint + state.user.image}
-                            alt="Profile"
-                          />
-                        )}
-                        {state.user && state.user && (
-                          <h3
-                            style={{
-                              textAlign: "center",
-                              fontSize: "15px",
-                              marginTop: "10px",
-                              textTransform: "uppercase",
-                              color: "white",
-                            }}>
-                            {state.user.first_name + " " + state.user.last_name}
-                          </h3>
-                        )}
-                        {state.user && state.user && (
-                          <h3
-                            style={{
-                              textAlign: "center",
-                              fontSize: "15px",
-                              marginTop: "10px",
-                              textTransform: "uppercase",
-                              color: "white",
-                            }}>
-                            {state.user.username}
-                          </h3>
-                        )}
-                      </div>
+                    <Popover.Body style={{ textAlign: "center" }}>
+                      {state.user && state.user.image && (
+                        <img
+                          height="100px"
+                          width="100px"
+                          className="rounded-circle"
+                          src={config.apiEndpoint + state.user.image}
+                          alt="Profile"
+                        />
+                      )}
+                      {state.user && (
+                        <h3
+                          style={{
+                            fontSize: "15px",
+                            marginTop: "10px",
+                            textTransform: "uppercase",
+                            color: "white",
+                          }}>
+                          {state.user.first_name + " " + state.user.last_name}
+                        </h3>
+                      )}
+                      {state.user && (
+                        <h3
+                          style={{
+                            fontSize: "15px",
+                            marginTop: "10px",
+                            textTransform: "uppercase",
+                            color: "white",
+                          }}>
+                          {state.user.username}
+                        </h3>
+                      )}
                       <ul className="list-group list-group-flush">
                         <button
                           className="border-light list-group-item-action list-group-item"
                           onClick={goToProfile}>
-                          <svg
-                            stroke="currentColor"
-                            fill="currentColor"
-                            strokeWidth="0"
-                            viewBox="0 0 24 24"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h4l3 3 3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 3.3c1.49 0 2.7 1.21 2.7 2.7 0 1.49-1.21 2.7-2.7 2.7-1.49 0-2.7-1.21-2.7-2.7 0-1.49 1.21-2.7 2.7-2.7zM18 16H6v-.9c0-2 4-3.1 6-3.1s6 1.1 6 3.1v.9z"></path>
-                          </svg>
                           Profile
                         </button>
                         {localStorage.getItem("user_access") === "true" && (
                           <button
                             className="border-light list-group-item-action list-group-item"
                             onClick={goToUser}>
-                            <svg
-                              stroke="currentColor"
-                              fill="currentColor"
-                              strokeWidth="0"
-                              viewBox="0 0 24 24"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
-                            </svg>
                             User Management
                           </button>
                         )}
                         <button className="border-light list-group-item-action list-group-item">
-                          <svg
-                            stroke="currentColor"
-                            fill="currentColor"
-                            strokeWidth="0"
-                            viewBox="0 0 24 24"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-7H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-1.75 9c0 .23-.02.46-.05.68l1.48 1.16c.13.11.17.3.08.45l-1.4 2.42c-.09.15-.27.21-.43.15l-1.74-.7c-.36.28-.76.51-1.18.69l-.26 1.85c-.03.17-.18.3-.35.3h-2.8c-.17 0-.32-.13-.35-.29l-.26-1.85c-.43-.18-.82-.41-1.18-.69l-1.74.7c-.16.06-.34 0-.43-.15l-1.4-2.42c-.09-.15-.05-.34.08-.45l1.48-1.16c-.03-.23-.05-.46-.05-.69 0-.23.02-.46.05-.68l-1.48-1.16c-.13-.11-.17-.3-.08-.45l1.4-2.42c.09-.15.27-.21.43-.15l1.74.7c.36-.28.76-.51 1.18-.69l.26-1.85c.03-.17.18-.3.35-.3h2.8c.17 0 .32.13.35.29l.26 1.85c.43.18.82.41 1.18.69l1.74-.7c.16-.06.34 0 .43.15l1.4 2.42c.09.15.05.34-.08.45l-1.48 1.16c.03.23.05.46.05.69z"></path>
-                          </svg>
                           Change Password
                         </button>
                         <button
                           className="border-light list-group-item-action list-group-item"
                           onClick={handleLogout}>
-                          <svg
-                            stroke="currentColor"
-                            fill="currentColor"
-                            strokeWidth="0"
-                            viewBox="0 0 24 24"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
-                          </svg>
                           Signout
                         </button>
                       </ul>
@@ -240,7 +207,7 @@ const Nav = () => {
           {windowWidth >= 768 && (
             <>
               <h6 className="icon-rm">
-                <img style={logo} src={logoo} alt="login" />
+                <img style={logoStyle} src={logoo} alt="login" />
               </h6>
               <h5 className="title">Ramsons Stainless</h5>
               <div className="desktop_bar">
@@ -264,7 +231,7 @@ const Nav = () => {
 
 export default Nav;
 
-const logo = {
+const logoStyle = {
   width: "150px",
   display: "inline",
   borderRadius: "40%",

@@ -39,7 +39,7 @@ export const Issue_Form = () => {
         // If item exists, update its quantity
         const updatedFormData = [...form_data];
         updatedFormData[existingIndex].qunatity +=
-          parseInt(scannedItem.qunatity) || 0;
+          parseInt(scannedItem.quantity) || 0;
         setforms(updatedFormData);
       } else {
         // If item doesn't exist, add it as a new item
@@ -47,7 +47,7 @@ export const Issue_Form = () => {
           key: form_data.length,
           code: "",
           skCode: scannedItem.code || "",
-          qunatity: parseInt(scannedItem.qunatity) || 0,
+          qunatity: parseInt(scannedItem.quantity) || 0,
           unit: scannedItem.unit || "",
           item_name: scannedItem.name || "",
           description: scannedItem.description || "",
